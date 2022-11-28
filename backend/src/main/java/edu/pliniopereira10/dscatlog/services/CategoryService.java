@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.pliniopereira10.dscatlog.dtos.CategoryDTO;
 import edu.pliniopereira10.dscatlog.entities.CategoryEntity;
+import edu.pliniopereira10.dscatlog.exceptions.ResourceNotFoundException;
 import edu.pliniopereira10.dscatlog.repositories.CategoryRepository;
 
 @Service
@@ -38,7 +39,7 @@ public class CategoryService {
 	@Transactional(readOnly = true)
 	public CategoryDTO findCategoryById(Long id) {
 		Optional<CategoryEntity> obj = repository.findById(id);
-		CategoryEntity entity = obj.get();
+		CategoryEntity entity = obj.orElseThrow(() -> new ResourceNotFoundException("Categoria não encontrada"));
 
 		return new CategoryDTO(entity);
 	}
