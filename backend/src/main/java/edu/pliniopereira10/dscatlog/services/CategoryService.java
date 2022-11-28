@@ -2,6 +2,8 @@ package edu.pliniopereira10.dscatlog.services;
 
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,19 +41,25 @@ public class CategoryService {
 	@Transactional(readOnly = true)
 	public CategoryDTO findCategoryById(Long id) {
 		Optional<CategoryEntity> obj = repository.findById(id);
-		CategoryEntity entity = obj.orElseThrow(() -> new ResourceNotFoundException("Categoria não encontrada"));
+		CategoryEntity entity = obj
+				.orElseThrow(() -> new ResourceNotFoundException("Categoria não encontrada"));
 
 		return new CategoryDTO(entity);
 	}
-	
+
 	@Transactional
 	public CategoryDTO update(Long id, CategoryDTO dto) {
-		CategoryEntity entity = repository.getReferenceById(id);
-		entity.setName(dto.getName());
-
-		entity = repository.save(entity);
-		
-		return new CategoryDTO(entity);
+		try {
+			CategoryEntity entity = repository.getReferenceById(id);
+			entity.setName(dto.getName());
+			
+			entity = repository.save(entity);
+			
+			return new CategoryDTO(entity);
+			
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Categoria não encontrada");
+		}
 	}
 
 }
