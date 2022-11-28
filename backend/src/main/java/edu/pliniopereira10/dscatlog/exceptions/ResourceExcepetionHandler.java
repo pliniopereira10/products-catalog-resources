@@ -14,13 +14,27 @@ public class ResourceExcepetionHandler {
 	
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<StandardErrorMessage> resourceNotFound(ResourceNotFoundException e, HttpServletRequest r){
+		HttpStatus status = HttpStatus.NOT_FOUND;
 		StandardErrorMessage message = new StandardErrorMessage();
 		message.setTimestamp(Instant.now());
-		message.setStatus(HttpStatus.NOT_FOUND.value());
+		message.setStatus(status.value());
 		message.setError("Resource not found");
 		message.setMessage(e.getMessage());
 		message.setPath(r.getRequestURI());
 		
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+		return ResponseEntity.status(status).body(message);
+	}
+	
+	@ExceptionHandler(DataBaseException.class)
+	public ResponseEntity<StandardErrorMessage> database(DataBaseException e, HttpServletRequest r){
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		StandardErrorMessage message = new StandardErrorMessage();
+		message.setTimestamp(Instant.now());
+		message.setStatus(status.value());
+		message.setError("Resource not found");
+		message.setMessage(e.getMessage());
+		message.setPath(r.getRequestURI());
+		
+		return ResponseEntity.status(status).body(message);
 	}
 }
