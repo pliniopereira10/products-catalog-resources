@@ -1,5 +1,7 @@
 package edu.pliniopereira10.dscatlog.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,6 +33,14 @@ public class CategoryService {
 		Page<CategoryEntity> entities = repository.findAll(request);
 
 		return entities.map(x -> new CategoryDTO(x));
+	}
+
+	@Transactional(readOnly = true)
+	public CategoryDTO findCategoryById(Long id) {
+		Optional<CategoryEntity> obj = repository.findById(id);
+		CategoryEntity entity = obj.get();
+
+		return new CategoryDTO(entity);
 	}
 
 }
