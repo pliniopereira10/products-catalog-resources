@@ -72,16 +72,16 @@ Responsável por carregar os dados entre o ***controlador Rest e Serviço***.
   * ***Observações para lembrar:***
     * `@RequestBody`
     * Header com o endereço da resposta.
-    * `URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/[id}").buildAndExpand(dto.getId()).toUri();``
-    * ``created(uri) - status 201`
+    * `URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/[id}").buildAndExpand(dto.getId()).toUri();`
+    * `created(uri) - status 201`
 
 #### GET/
 
 - **Observações para lembrar:**
   
-  - Endpoint com busca paginada. `Page<T>``
+  - Endpoint com busca paginada. `Page<T>`
   
-  - ``@RequestParam` utilizado para passar um dado opcional na url.
+  - `@RequestParam` utilizado para passar um dado opcional na url.
   
         @RequestParam(value = "page", defaultValue = "0") Integer page,
         @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
@@ -167,3 +167,12 @@ Para isso temos o **status 404 - NOT FOUND** que indica que o servidor não cons
    	}
    }
 
+## :timer_clock: Dados para auditoria
+
+Criei dois atributos para informar o momento de inserção dos dados e atualização no padrão UTC.
+
+- `private Instant createdAT`
+- `private Instant updatedAt`
+- notação do JPA:
+  - no atributo `@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")`
+  - nos métodos : `@PrePersist` e `@PreUpdate`
