@@ -36,7 +36,21 @@
    * HashCode e Equals
 
 ### 3. Mapeamento
-Objeto-relacional **JPA** na entidade.
+[**#Entities**](https://github.com/pliniopereira10/products-catalog-resources/blob/main/backend/src/main/java/edu/pliniopereira10/dscatlog/entities)
+
+Objeto-relacional **JPA** nas entidades.
+
+> **Atenção:** 
+>
+> - Relacionamento muitos para muitos gera uma nova tabela, as notações são:
+>
+> ```
+> @ManyToMany(name = "tb_name01_name02"),
+> 	joinColumns = @JoinColumn(name = "name01_id"),
+> 	inverseJoinColumns = @ JoinColumn(name = "name02_id")
+> ```
+> 
+
 
 ### 4. Configuração
 Arquivo `application.properties` para acesso ao ***ambiente de teste*** no **banco de dados H2**.
@@ -48,9 +62,13 @@ Arquivo `application-test.properties`  e configurado para o banco de dados **H2*
 Scripts **SQL** para povoar o **banco de dados** no  arquivo `import.sql`.
 
 ### 7. Criação interface
+[**#Repositories**](https://github.com/pliniopereira10/products-catalog-resources/blob/main/backend/src/main/java/edu/pliniopereira10/dscatlog/repositories)
+
 JpaRepository para a entidade(*camada de acesso a dados* **interface extends JpaRepository** ).
 
 ### 8. Criação da camada DTO 
+[**#DTO’s**](https://github.com/pliniopereira10/products-catalog-resources/blob/main/backend/src/main/java/edu/pliniopereira10/dscatlog/dtos)
+
 Responsável por carregar os dados entre o ***controlador Rest e Serviço***.
 
    - **Observações:**
@@ -58,14 +76,18 @@ Responsável por carregar os dados entre o ***controlador Rest e Serviço***.
 
 ### 9. Criação da camada de serviços.
 
+[**#Services**](https://github.com/pliniopereira10/products-catalog-resources/blob/main/backend/src/main/java/edu/pliniopereira10/dscatlog/services)
+
    - **Observações:**
      - método **save**(*recebe dto e salva na entidade, não é necessário salvar id, pois o banco de dados é autoincrementado*).
-     - método **findAll**(*tipo Page já é uma stream()*).
+     - método **findAll**(*tipo Page já é uma stream() é necessário colocar PageRequest como parâmetro*).
      - método **findById**(*utilzar classe Optional e buscar objeto get()*)
      - método **update**(*getReferenceById()*)
-     - método **delete**(*sem a notação `@Transactional` para capturar exceção que retrona do banco de dados*)
+     - método **delete**(*sem a notação `@Transactional` para capturar exceção que retorna do banco de dados*)
 
 ### 10. Criação da camada controller com os endpoints:
+
+[**#Controllers**](https://github.com/pliniopereira10/products-catalog-resources/blob/main/backend/src/main/java/edu/pliniopereira10/dscatlog/controllers)
 
 #### POST/
 
@@ -113,6 +135,8 @@ Responsável por carregar os dados entre o ***controlador Rest e Serviço***.
   - `noContent().build() - status 204`
 
 ## :dart: Tratando Exceções
+
+[**#Exceptions**](https://github.com/pliniopereira10/products-catalog-resources/blob/main/backend/src/main/java/edu/pliniopereira10/dscatlog/exceptions)
 
 Quando o servidor retorna um código de erro **(HTTP) 500**, indica que encontrou uma condição inesperada e que o impediu de atender à solicitação, esse código de status não é um erro do servidor e sim da solicitação do usuário.
 
@@ -169,7 +193,7 @@ Para isso temos o **status 404 - NOT FOUND** que indica que o servidor não cons
 
 ## :timer_clock: Dados para auditoria
 
-Criei dois atributos para informar o momento de inserção dos dados e atualização no padrão UTC.
+Criei dois atributos para informar o momento de inserção dos dados e atualização, no padrão UTC.
 
 - `private Instant createdAT`
 - `private Instant updatedAt`
