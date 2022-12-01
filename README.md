@@ -42,11 +42,11 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
       - [ ] Usuário
    - [x] Serviços
       - [x] Categoria
-      - [ ] Produto
+      - [x] Produto
       - [ ] Usuário 
    - [x] Endpoints
       - [x] Categoria
-      - [ ] Produto
+      - [x] Produto
       - [ ] Usuário
    
 - [ ] Tarefa 2 - Desenvolver front-end
