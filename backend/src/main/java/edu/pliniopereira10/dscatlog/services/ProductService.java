@@ -2,6 +2,8 @@ package edu.pliniopereira10.dscatlog.services;
 
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -48,6 +50,21 @@ public class ProductService {
 		ProductEntity entity = obj.orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado"));
 
 		return new ProductDTO(entity, entity.getCategories());
+	}
+
+	@Transactional
+	public ProductDTO update(Long id, ProductDTO dto) {
+		try {
+			ProductEntity entity = repository.getReferenceById(id);
+			copyDtoToEntity(dto, entity);
+
+			entity = repository.save(entity);
+
+			return new ProductDTO(entity);
+
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Produto não encontrado");
+		}
 	}
 
 	private void copyDtoToEntity(ProductDTO dto, ProductEntity entity) {
