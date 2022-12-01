@@ -5,6 +5,8 @@ import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ import edu.pliniopereira10.dscatlog.dtos.CategoryDTO;
 import edu.pliniopereira10.dscatlog.dtos.ProductDTO;
 import edu.pliniopereira10.dscatlog.entities.CategoryEntity;
 import edu.pliniopereira10.dscatlog.entities.ProductEntity;
+import edu.pliniopereira10.dscatlog.exceptions.DataBaseException;
 import edu.pliniopereira10.dscatlog.exceptions.ResourceNotFoundException;
 import edu.pliniopereira10.dscatlog.repositories.CategoryRepository;
 import edu.pliniopereira10.dscatlog.repositories.ProductRepository;
@@ -64,6 +67,18 @@ public class ProductService {
 
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Produto não encontrado");
+		}
+	}
+
+	public void delete(Long id) {
+		try {
+			repository.deleteById(id);
+
+		} catch (EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException("Produto não encontrado");
+
+		} catch (DataIntegrityViolationException e) {
+			throw new DataBaseException("Violação de integridade");
 		}
 	}
 
