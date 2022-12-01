@@ -38,7 +38,7 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 - [x] Tarefa 1 - Desenvolver back-end
    - [x] Entidades
       - [x] Categoria
-      - [ ] Produto
+      - [x] Produto
       - [ ] Usuário
    - [x] Serviços
       - [x] Categoria
