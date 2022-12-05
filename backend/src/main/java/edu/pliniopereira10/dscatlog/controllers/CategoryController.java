@@ -4,8 +4,7 @@ import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -38,15 +36,9 @@ public class CategoryController {
 	}
 
 	@GetMapping
-	public ResponseEntity<Page<CategoryDTO>> getAllCategories(
-			@RequestParam(value = "page", defaultValue = "0") Integer page,
-			@RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
-			@RequestParam(value = "direction", defaultValue = "ASC") String direction,
-			@RequestParam(value = "orderBy", defaultValue = "name") String orderBy) {
+	public ResponseEntity<Page<CategoryDTO>> getAllCategories(Pageable pageable) {
 
-		PageRequest request = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-
-		Page<CategoryDTO> pages = service.findAllPagedCategories(request);
+		Page<CategoryDTO> pages = service.findAllPagedCategories(pageable);
 
 		return ResponseEntity.ok().body(pages);
 	}
@@ -57,18 +49,18 @@ public class CategoryController {
 
 		return ResponseEntity.ok().body(dto);
 	}
-	
+
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<CategoryDTO> updateCategory(@PathVariable Long id, @RequestBody CategoryDTO dto){
+	public ResponseEntity<CategoryDTO> updateCategory(@PathVariable Long id, @RequestBody CategoryDTO dto) {
 		dto = service.update(id, dto);
-		
+
 		return ResponseEntity.ok().body(dto);
 	}
-	
+
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> deleteCategory(@PathVariable Long id){
+	public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
 		service.delete(id);
-		
+
 		return ResponseEntity.noContent().build();
 	}
 
