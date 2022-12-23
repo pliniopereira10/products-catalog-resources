@@ -14,7 +14,7 @@
 
 ## 💎 Modelo UML da entidade
 
-![UML dscatalog](https://github.com/pliniopereira10/images/blob/main/imagens-uml/uml-dscatalog.png)
+![UML dscatalog](https://github.com/pliniopereira10/images/blob/9eec9634dfdff982ee3b948327e34f7cb59a5f6a/diagram-images/uml-dscatalog.png)
 
 ## 👣 Passo-a-Passo
 

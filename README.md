@@ -21,6 +21,8 @@
 >
 >- Postman
 >
+>- JUnit 5 e Mockito
+>
 
 ### :point_right: Tecnologias empregadas no front-end:  
 
@@ -48,13 +50,15 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
       - [x] Categoria
       - [x] Produto
       - [ ] Usuário
-   
-- [ ] Tarefa 2 - Desenvolver front-end
+- [x] Tarefa 2 - Testes back-end
+   - [x] DataJpaTest
+   - [ ] ExtendWith
+- [ ] Tarefa 3 - Desenvolver front-end
 
 ***
 ### 💎 Modelo UML da entidade
 
-![UML dscatalog](https://github.com/pliniopereira10/images/blob/main/imagens-uml/uml-dscatalog.png)
+![UML dscatalog](https://github.com/pliniopereira10/images/blob/9eec9634dfdff982ee3b948327e34f7cb59a5f6a/diagram-images/uml-dscatalog.png)
 
 ***
 
